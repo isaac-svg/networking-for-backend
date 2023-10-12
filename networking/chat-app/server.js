@@ -1,11 +1,22 @@
 const net = require("net")
 
-
 const server = net.createServer()
 
-server.on("connection", (socket)=>{
+// an array containing all the sockets of the connected clients
+const clients = []
+server.on("connection", async (socket)=>{
 
-    console.log("A new connection to the server!")
+    socket.on("data", (data)=>{
+
+        clients.map(s=>{
+            s.write(data)
+        })
+    })
+
+
+    clients.push(socket)
+
+
 })
 
 
