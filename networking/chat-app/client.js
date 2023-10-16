@@ -33,7 +33,7 @@ const ask = async () =>{
     // move cursor 1 line up
     await  moveCursor(0, -1)
     await clearLine(0)
-    socket.write(message)
+    socket.write(`${id}-message-${message}`)
 }
 const socket =  net.createConnection(
 {port:"3000", host:"127.0.0.1"},
@@ -44,12 +44,24 @@ async()=>{
     ask()
 
 })
+let id;
 socket.on("data", async (data)=>{
 
     console.log()
     await moveCursor(0, -1)
     await clearLine(0)
+    if (data.toString("utf-8").substring(0,2) === "id") {
+        // when we are getting the id
+        id = data.toString("utf-8").substring(3)
+
+        console.log(`Your id is ${id}\n`)
+        
+    } else {
+        // when we are getting a message
+
+        
     console.log(data.toString("utf-8"))
+    }
     ask()
 })
 
