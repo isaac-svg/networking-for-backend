@@ -17,7 +17,7 @@ server.on("connection", async (socket)=>{
         const message = dataString.substring(dataString.lastIndexOf("-") + 1)
 
         clients.map(client=>{
-            cliendatat.socket.write(`> User ${id}: ${message}`)
+            client.socket.write(`> User ${id}: ${message}`)
         })
     })
 
